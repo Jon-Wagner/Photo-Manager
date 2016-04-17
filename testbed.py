@@ -23,27 +23,17 @@ class TestBed:
         with self.db_connection:
             self.db_cursor = self.db_connection.cursor()
 
-    def create_table(self,  typed_columns):
-        self.db_cursor.execute("CREATE TABLE Photos (" + typed_columns + ")")
+    def create_table(self):
+        self.db_cursor.execute("CREATE TABLE Photos (Id INTEGER PRIMARY KEY, File_Path Text, People TEXT DEFAULT 'unknown', Face_Locations TEXT DEFAULT '', Animals TEXT DEFAULT 'unknown', Geographic_Location TEXT DEFAULT 'unknown')")
 
-    def insert_column(self, typed_column, default_value):
-        self.db_cursor.execute("ALTER TABLE Photos ADD COLUMN " + typed_column + " DEFAULT '" + default_value + "'")
+    def insert_photo(self, photo_to_insert):
+        self.db_cursor.execute('INSERT INTO Photos VALUES (?,?,?,?,?,?)', photo_to_insert.get_insertable())
 
-    def insert_photo(self, row_values):
-        self.db_cursor.execute("INSERT INTO Photos VALUES ('" + row_values + "')")
+    # TODO: return photos, not rows
+    # TODO: create one of these for each column
+    def select_name(self, name):
+        self.db_cursor.execute('SELECT id FROM Photos WHERE People = ?', name)
+        ids = self.db_cursor.fetchall()
 
-    # this may be vulnerable to SQL injection, column and value should be sanitized
-    def select_photo(self, typed_column, value):
-        self.db_cursor.execute("SELECT * FROM Photos WHERE " + typed_column + " = '" + value + "'")
-        return self.db_cursor.fetchall()
-
-    def change_value(self, match_column, match_value, change_column, change_value):
-        self.db_cursor.execute("UPDATE Photos SET " + change_column + " = '" + change_value + "' WHERE " + match_column + " = '" + match_value + "'")
-
-    def sanitize_string(self, unsanitized_string):
-        sanitized_string = ''
-
-        return sanitized_string
-
-    def kill(self):
-        self.db_cursor.close()
+    def change_photo(self, photo_to_change):
+        photo_to_change.get_insertable()
