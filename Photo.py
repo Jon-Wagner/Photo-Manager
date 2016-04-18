@@ -14,6 +14,19 @@ class Photo():
         self.animals = animals
         self.geographic_location = geographic_location
 
-    def add_tag(self, tag_label, tag_value):
-        # can either do if ... elif ... else or
-        # some sort of function and then dictionary based shenenagins
+    def add_tag(self, label, value):
+        if label == 'filepath':
+            self.filepath = value
+        elif label == 'people':
+            self.people.extend(value)
+        elif label == 'face location':
+            for val in value:
+                if val[0] in self.people:
+                    self.face_locations.append(val)
+                else:
+                    # TODO: this should provide a clear failure message
+                    return
+        elif label == 'animals':
+            self.animals.extend(value)
+        elif label == 'geographic location':
+            self.geographic_location = value
