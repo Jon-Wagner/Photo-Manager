@@ -24,7 +24,7 @@ class TestBed:
             self.db_cursor = self.db_connection.cursor()
 
     def create_table(self):
-        self.db_cursor.execute("CREATE TABLE Photos (Id INTEGER PRIMARY KEY, File_Path Text, People TEXT DEFAULT 'unknown', \
+        self.db_cursor.execute("CREATE TABLE Photos (Id INTEGER PRIMARY KEY, Filepath Text, People TEXT DEFAULT 'unknown', \
                                                       Face_Locations TEXT DEFAULT '', Animals TEXT DEFAULT 'unknown', \
                                                       Geographic_Location TEXT DEFAULT 'unknown')")
 
