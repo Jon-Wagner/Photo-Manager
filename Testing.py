@@ -13,6 +13,7 @@ Photo:
 add new values without being a clusterfuck of lists
 don't overwrite existing values
 confirm overwriting existing values
+add values to several columns in one shot
 - create from a row
 export to a row
 export to displayable
@@ -50,14 +51,14 @@ class TestPhoto(unittest.TestCase):
 
     def test_create_photo(self):
         for x in self.test_row.keys():
-            self.assertEqual(self.test_photo.export_dictionary()[x], self.test_row[x])
+            self.assertEqual(self.test_photo.to_dict()[x], self.test_row[x])
 
     def test_change_a_photo_value(self):
         self.test_photo.add_tag('Animals', ['Foos Dog'])
-        self.assertEqual(self.test_photo.export_dictionary()['Animals'], ['Foos Dog'])
+        self.assertEqual(self.test_photo.to_dict()['Animals'], ['Foos Dog'])
 
     def test_export_dictionary(self):
-        self.assertEqual(self.test_photo.export_dictionary(), self.test_row)
+        self.assertEqual(self.test_photo.to_dict(), self.test_row)
 
 if __name__  == '__main__':
     unittest.main()
